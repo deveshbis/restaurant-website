@@ -4,6 +4,7 @@ import {
   } from "react-router-dom";
 import Main from "../layout/Main";
 import Home from "../Pages/Home/Home";
+import Menu from "../Pages/Menu/Menu";
 
 
 
@@ -14,8 +15,12 @@ import Home from "../Pages/Home/Home";
       children: [
        {
         path: '/' ,
-        element: <Home></Home>
-       }
+        element: <Home></Home>,
+       },
+       {
+        path: 'menu' ,
+        element: <Menu></Menu>,
+       },
       ]
     },
   ])
