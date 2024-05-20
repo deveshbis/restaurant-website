@@ -10,6 +10,8 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
 import Secrate from "../components/Secrate";
+import Deshboard from "../layout/Deshboard/Deshboard";
+import Cart from "../PagesDashboard/Cart/Cart";
 
 
 
@@ -44,4 +46,15 @@ import Secrate from "../components/Secrate";
        },
       ]
     },
+    {
+      path: "dashboard",
+      element: <Deshboard/>,
+      children: [
+        {
+          path: "cart",
+          element: <Cart></Cart>
+        }
+      ]
+
+    }
   ])

@@ -15,10 +15,10 @@ const Navbar = () => {
         <li><NavLink to='/dashboard'>DASHBOARD</NavLink></li>
         <li><NavLink to='menu'>Our Menu</NavLink></li>
         <li><NavLink to='/order/salad'>Order Food</NavLink></li>
-        <li><NavLink to='/'><button className="btn">
+        <li><NavLink to='/dashboard/cart'>
             <FaShoppingCart/>
             <div className="badge">+{cart.length}</div>
-        </button></NavLink></li>
+        </NavLink></li>
 
     </>
     return (
