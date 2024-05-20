@@ -15,27 +15,21 @@ const Banner = () => {
         <Carousel>
             <div>
                 <img src={banImg1} />
-                <p className="legend">Legend 1</p>
             </div>
             <div>
                 <img src={banImg2} />
-                <p className="legend">Legend 2</p>
             </div>
             <div>
                 <img src={banImg3} />
-                <p className="legend">Legend 3</p>
             </div>
             <div>
                 <img src={banImg4} />
-                <p className="legend">Legend 3</p>
             </div>
             <div>
                 <img src={banImg5} />
-                <p className="legend">Legend 3</p>
             </div>
             <div>
                 <img src={banImg6} />
-                <p className="legend">Legend 3</p>
             </div>
         </Carousel>
 
