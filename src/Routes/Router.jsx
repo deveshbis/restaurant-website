@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import Secrate from "../components/Secrate";
 import Deshboard from "../layout/Deshboard/Deshboard";
 import Cart from "../PagesDashboard/Cart/Cart";
+import AllUsers from "../PagesDashboard/AllUsers/AllUsers";
 
 
 
@@ -48,12 +49,18 @@ import Cart from "../PagesDashboard/Cart/Cart";
     },
     {
       path: "dashboard",
-      element: <Deshboard/>,
+      element: <PrivateRoute><Deshboard/></PrivateRoute>,
       children: [
         {
           path: "cart",
           element: <Cart></Cart>
-        }
+        },
+
+        //admin dashboard
+        {
+          path: "users",
+          element: <AllUsers/>
+        },
       ]
 
     }

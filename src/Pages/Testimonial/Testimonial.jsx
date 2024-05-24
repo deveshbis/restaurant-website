@@ -21,7 +21,7 @@ const Testimonial = () => {
                 setReview(data);
             })
     }, [])
-    console.log(reviews);
+    // console.log(reviews);
 
     return (
         <section className="my-20">

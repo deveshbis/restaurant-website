@@ -3,6 +3,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import Swal from "sweetalert2";
+import SocialLogin from "../../components/SocialLogin";
 
 
 const Login = () => {
@@ -27,21 +28,21 @@ const Login = () => {
                 Swal.fire({
                     title: "User Login Successfully",
                     showClass: {
-                      popup: `
+                        popup: `
                         animate__animated
                         animate__fadeInUp
                         animate__faster
                       `
                     },
                     hideClass: {
-                      popup: `
+                        popup: `
                         animate__animated
                         animate__fadeOutUp
                         animate__faster
                       `
                     }
-                  });
-                  navigate(from, {replace: true});
+                });
+                navigate(from, { replace: true });
             })
     }
     return (
@@ -142,6 +143,8 @@ const Login = () => {
                                 </button>
                             </div>
                         </form>
+                        <div className="divider"></div>
+                        <SocialLogin></SocialLogin>
                     </div>
 
                     <div className="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">

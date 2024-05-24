@@ -1,15 +1,19 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { app } from "../Firebase/firebase.config";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app)
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({children}) => {
 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     // const [reload, setReload] = useState(false);
+
+    const axiosPublic = useAxiosPublic();
 
 
     const createUser = (email, password) => {
@@ -29,6 +33,11 @@ const AuthProvider = ({children}) => {
         return signInWithEmailAndPassword(auth, email, password)
     }
 
+    const googleLogin = () => {
+        setLoading(true);
+        return signInWithPopup(auth, googleProvider)
+    }
+
     const logoutUser = () => {
         setLoading(true);
         setUser(null);
@@ -39,16 +48,24 @@ const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (user) => {
+            setUser(user)
+            setLoading(false); 
             if (user) {
-                setUser(user);
-                setLoading(false);
+                const userInfo = {email: user.email}
+                axiosPublic.post("/jwt", userInfo )
+                .then(res =>{
+                    if(res.data.token){
+                        localStorage.setItem("access-token", res.data.token)
+                    }
+                })
             }
             else{
                 setLoading(false); 
+                localStorage.removeItem("access-token");
             }
         });
         return () => unSubscribe();
-    }, [])
+    }, [axiosPublic])
 
 
     const allValue = {
@@ -56,6 +73,7 @@ const AuthProvider = ({children}) => {
         loading,
         createUser,
         signInUser,
+        googleLogin,
         logoutUser,
         updateUserProfile
         

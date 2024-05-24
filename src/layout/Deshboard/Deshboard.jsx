@@ -1,38 +1,71 @@
-import { FaBook, FaCalendar, FaHome, FaShoppingCart, FaStreetView } from "react-icons/fa";
-import { MdOutlineRestaurantMenu } from "react-icons/md";
+import { FaBook, FaCalendar, FaHome, FaListUl, FaShoppingCart, FaStreetView, FaUser } from "react-icons/fa";
+import { MdContactPhone, MdOutlineRestaurantMenu } from "react-icons/md";
 import { SiFoodpanda } from "react-icons/si";
 import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../../Hooks/useCart";
+import { IoFastFoodOutline } from "react-icons/io5";
+import { BiBookAdd } from "react-icons/bi";
+import UseAdmin from "../../Hooks/UseAdmin";
+
 
 
 const Deshboard = () => {
+    const [cart] = useCart()
+
+    const [isAdmin] = UseAdmin()
     return (
         <div className="flex">
             <div className="w-64 bg-orange-600 min-h-screen">
-                <ul className="menu">
-                    <li><NavLink to="/dashboard/UserHome"><FaHome/>User Home</NavLink></li>
-                </ul>
-                <ul className="menu">
-                    <li><NavLink to="/dashboard/reservation"><FaCalendar/>Reservation</NavLink></li>
-                </ul>
-                <ul className="menu">
-                    <li><NavLink to="/dashboard/cart"><FaShoppingCart></FaShoppingCart>My Cart</NavLink></li>
-                </ul>
-                <ul className="menu">
-                    <li><NavLink to="/dashboard/review"><FaStreetView/>Add Review</NavLink></li>
-                </ul>
-                <ul className="menu">
-                    <li><NavLink to="/dashboard/bookingt"><FaBook/>My Booking</NavLink></li>
-                </ul>
+                {
+                    isAdmin ? <>
+                        <ul className="menu">
+                            <li><NavLink to="/dashboard/adminHome"><FaHome />Admin Home</NavLink></li>
+                        </ul>
+                        <ul className="menu">
+                            <li><NavLink to="/dashboard/addItem"><IoFastFoodOutline />Add Item</NavLink></li>
+                        </ul>
+                        <ul className="menu">
+                            <li><NavLink to="/dashboard/manageItem"><FaListUl />Manage Item</NavLink></li>
+                        </ul>
+                        <ul className="menu">
+                            <li><NavLink to="/dashboard/manageBooking"><BiBookAdd />Manage Booking</NavLink></li>
+                        </ul>
+                        <ul className="menu">
+                            <li><NavLink to="/dashboard/users"><FaUser />All Users</NavLink></li>
+                        </ul>
+                    </>
+                        :
+                        <>
+                            <ul className="menu">
+                                <li><NavLink to="/dashboard/UserHome"><FaHome />User Home</NavLink></li>
+                            </ul>
+                            <ul className="menu">
+                                <li><NavLink to="/dashboard/reservation"><FaCalendar />Reservation</NavLink></li>
+                            </ul>
+                            <ul className="menu">
+                                <li><NavLink to="/dashboard/cart"><FaShoppingCart></FaShoppingCart>My Cart ({cart.length})</NavLink></li>
+                            </ul>
+                            <ul className="menu">
+                                <li><NavLink to="/dashboard/review"><FaStreetView />Add Review</NavLink></li>
+                            </ul>
+                            <ul className="menu">
+                                <li><NavLink to="/dashboard/booking"><FaBook />My Booking</NavLink></li>
+                            </ul>
+                        </>
+                }
                 <div className="divider"></div>
 
                 <ul className="menu">
-                    <li><NavLink to="/"><FaHome/> Home</NavLink></li>
+                    <li><NavLink to="/"><FaHome /> Home</NavLink></li>
                 </ul>
                 <ul className="menu">
                     <li><NavLink to="/menu"><MdOutlineRestaurantMenu /> Menu</NavLink></li>
                 </ul>
                 <ul className="menu">
                     <li><NavLink to="/order/salad"><SiFoodpanda /> Order</NavLink></li>
+                </ul>
+                <ul className="menu">
+                    <li><NavLink to="/order/contact"><MdContactPhone /> Contact</NavLink></li>
                 </ul>
             </div>
             <div className="flex-1 p-10">

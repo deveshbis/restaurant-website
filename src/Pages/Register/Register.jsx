@@ -4,11 +4,13 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 
 const Register = () => {
-const navigate = useNavigate();
-    const {  createUser, updateUserProfile } = useContext(AuthContext)
+    const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic()
+    const { createUser, updateUserProfile } = useContext(AuthContext)
     const {
         register,
         handleSubmit,
@@ -19,25 +21,35 @@ const navigate = useNavigate();
     const onSubmit = (data) => {
         console.log(data)
         createUser(data.email, data.password)
-        .then(result =>{
-            const loggedUser = result.user;
-            console.log(loggedUser);
-            updateUserProfile(data.name, data.photoUrl)
-            .then(()=>{
-                console.log("user updated");
-                reset()
-                Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Your work has been saved",
-                    showConfirmButton: false,
-                    timer: 1500
-                  });
-                  navigate('/')
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                updateUserProfile(data.name, data.photoUrl)
+                    .then(() => {
+                        // console.log("user updated");
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        axiosPublic.post("/users", userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    reset()
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "User Created Successfully",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/')
+                                }
+                            })
+
+                    })
+                    .catch(error => console.log(error))
             })
-            .catch(error=> console.log(error))
-        })
-        
+
     }
     return (
         <>
